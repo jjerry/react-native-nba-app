@@ -41,8 +41,12 @@ export default class PlayerIndex extends Component {
 
   componentWillReceiveProps (props) {
     const {playerList} = props
+      const {dataSource} = this.state
     this.playerList = playerList.data
     this.searchRecent = playerList.recent
+    this.setState({
+      dataSource: dataSource.cloneWithRows(playerList.data)
+    })
   }
 
   componentWillUnmount () {
@@ -105,7 +109,7 @@ export default class PlayerIndex extends Component {
     const {text, dataSource} = this.state
 
     let myDataSource = dataSource
-    if (!text.length) {
+    if ((!text.length) &&(this.searchRecent) &&(this.searchRecent.length > 0)) {
       myDataSource = dataSource.cloneWithRows(this.searchRecent)
     }
 
